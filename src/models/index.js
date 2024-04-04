@@ -1,11 +1,17 @@
 "use strict";
 
-const fs = require("fs");
-const path = require("path");
-const Sequelize = require("sequelize");
-const basename = path.basename(__filename);
+import fs from "fs";
+import path from "path";
+import Sequelize from "sequelize";
+import { fileURLToPath } from "node:url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename); // Lấy thư mục chứa file hiện tại
+const resolvedDirname = path.resolve(__dirname, ".."); // Sử dụng path.resolve để loại bỏ phần mở rộng .js
+
+const { basename } = path;
 const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.json")[env];
+import configJson from "../config/config.json" assert { type: "json" };
+const config = configJson[env];
 const db = {};
 
 let sequelize;
@@ -20,27 +26,36 @@ if (config.use_env_variable) {
   );
 }
 
-fs.readdirSync(__dirname)
-  .filter((file) => {
-    return (
-      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
-    );
-  })
-  .forEach((file) => {
-    const model = require(path.join(__dirname, file))(
-      sequelize,
-      Sequelize.DataTypes
-    );
-    db[model.name] = model;
-  });
+// Kiểm tra xem __dirname có phải là một thư mục không
+const isDirectory = fs.statSync(resolvedDirname).isDirectory();
 
-Object.keys(db).forEach((modelName) => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
+// Nếu __dirname là một thư mục, thực hiện đọc các tệp trong đó
+if (isDirectory) {
+  fs.readdirSync(resolvedDirname)
+    .filter((file) => {
+      return (
+        file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+      );
+    })
+    .forEach(async (file) => {
+      const model = (await import(path.join(resolvedDirname, file))).default(
+        sequelize,
+        Sequelize.DataTypes
+      );
+      db[model.name] = model;
+    });
+
+  Object.keys(db).forEach((modelName) => {
+    if (db[modelName].associate) {
+      db[modelName].associate(db);
+    }
+  });
+} else {
+  console.error("__dirname is not a directory", resolvedDirname);
+  console.log("import.meta.url", fileURLToPath(import.meta.url));
+}
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;

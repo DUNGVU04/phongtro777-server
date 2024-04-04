@@ -1,5 +1,6 @@
 import db from "../models/index.js";
-const { Op } = require("sequelize");
+import { Op } from "sequelize";
+
 import { v4 as generateId } from "uuid";
 import generateCode from "../utils/generateCode.js";
 import moment from "moment";
