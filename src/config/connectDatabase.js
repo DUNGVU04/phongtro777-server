@@ -1,8 +1,8 @@
 import { Sequelize } from "sequelize";
 
 // Option 3: Passing parameters separately (other dialects)
-const sequelize = new Sequelize("d-phongtro777", "dung", "24042002", {
-  host: "phongtro777.cj02yyucscz4.ap-southeast-1.rds.amazonaws.com",
+const sequelize = new Sequelize("d-phongtro777", "root", "240402", {
+  host: "127.0.0.1",
   dialect: "mysql",
   logging: false, // không log ra những thứ không cần thiết
 });

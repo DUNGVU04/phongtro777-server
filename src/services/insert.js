@@ -1,10 +1,10 @@
 import db from "../models/index.js"; // sẽ đến file index.js trong models để lấy db
 import bcrypt from "bcryptjs";
 import { v4 } from "uuid";
-import chothuecanho from "../../data/chothuecanho.json" assert { type: "json" };
-import chothuematbang from "../../data/chothuematbang.json" assert { type: "json" };
-import chothuephongtro from "../../data/chothuematbang.json" assert { type: "json" };
-import nhachothue from "../../data/chothuematbang.json" assert { type: "json" };
+import chothuecanho from "../../data/chothuecanho.json";
+import chothuematbang from "../../data/chothuematbang.json";
+import chothuephongtro from "../../data/chothuematbang.json";
+import nhachothue from "../../data/chothuematbang.json";
 import { dataPrice, dataArea } from "../utils/data.js";
 import { getNumberFromStringV2 } from "../utils/common.js";
 import generateCode from "../utils/generateCode.js";

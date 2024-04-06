@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "dung",
-    "password": "24042002",
+    "username": "root",
+    "password": "240402",
     "database": "d-phongtro777",
-    "host": "phongtro777.cj02yyucscz4.ap-southeast-1.rds.amazonaws.com",
+    "host": "127.0.0.1",
     "dialect": "mysql",
     "logging": false
   },
@@ -15,10 +15,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "dung",
-    "password": "24042002",
+    "username": "root",
+    "password": "240402",
     "database": "d-phongtro777",
-    "host": "phongtro777.cj02yyucscz4.ap-southeast-1.rds.amazonaws.com",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   }
 }
